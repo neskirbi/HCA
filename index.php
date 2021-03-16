@@ -40,16 +40,24 @@ include "controler/conn.php"; ?>
         $result = sqlsrv_query($conn, $query) or die( print_r( sqlsrv_errors(), true)) ;
         $rows = 0;
         while($row = sqlsrv_fetch_array($result)){
+          if($row['tipoUsuario']=='Legal'){
+            $_SESSION['user_log'] = $username;
+            header("Location: production/mainlegal.php");
+          
+  
+          }else if($row['tipoUsuario']=='Capital'){
+            $_SESSION['user_log'] = $username;
+            header("Location: production/maincapital.php");
+          }else{
+            $_SESSION['user_log'] = $username;
+            header("Location: production/main.php"); 
+          }
           $rows++;
         }
-        if($rows==1){
-          $_SESSION['user_log'] = $username;
-          header("Location: production/main.php");
-        
-
-        }else{
+        if($rows==0){
           echo "<div class='form'> <h3>nombre/pass Incorreto.</h3> <br/> <a href='index.php'>Login</a> </div>";
          //nota cambia a la plantilla de pagina erronea o agregar el modal, ver cual puede ser la mejor opcion 
+
         }
       }else{
     ?>
