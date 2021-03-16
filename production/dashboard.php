@@ -204,7 +204,7 @@ Botones de inicio
       <th style="text-align: center; background-color: #405467; border:solid #fff 1px; min-width:120px; "><font style="color: #fff;" size="2" >Cedis</font></th>
       <th style="text-align: center; background-color: #405467; border:solid #fff 1px; min-width:150px; "><font style="color: #fff;" size="2" >Puesto</font></th>
       <th style="text-align: center; background-color: #405467; border:solid #fff 1px; min-width:110px; "><font style="color: #fff;" size="2" >Status</font></th>
-      <th style="text-align: center; background-color: #405467; border:solid #fff 1px; min-width:400px; "><font style="color: #fff;" size="2" >Actas<br>Admon.</font></th>
+      <!--<th style="text-align: center; background-color: #405467; border:solid #fff 1px; min-width:400px; "><font style="color: #fff;" size="2" >Actas<br>Admon.</font></th>-->
       <!--<th style="text-align: center; background-color: #405467; border:solid #fff 1px; min-width:110px; "><font style="color: #fff;" size="2" >Autorizada</font></th>-->
       <th style="text-align: center; background-color: #405467; border:solid #fff 1px; min-width:100px; "><font style="color: #fff;" size="2" >Fecha Alta</font></th>
       <th style="text-align: center; background-color: #405467; border:solid #fff 1px; min-width:100px; "><font style="color: #fff;" size="2" >Fecha Baja</font></th>
@@ -321,71 +321,7 @@ Botones de inicio
         echo '<td style="text-align: center; min-width: 150px;">'.$puesto_descripcion.'</td>';//puesto
         echo '<td style="text-align: center; min-width: 110px;">'.$estatus.'</td>';
         ?>
-        <td style="text-align: center; min-width: 400px;">
-                <?php
-                $acta=json_decode($string_actas,true); 
-                if(isset($acta['1'])){
-                    ?>
-                    <div style="display: inline-block;">
-                    <img src="imagen/fileclip.png" style="vertical-align: top; cursor: pointer;" id="img1<?php echo $Id_usuario;?>" onclick="DescargarActa('<?php echo $acta['1'];?>');" width="30px">
-                     <?php
-                    if(!isset($actas_status['1'])){
-                      ?>
-                        <div id="opt1<?php echo $Id_usuario; ?>">
-                          <a onclick="ValidarActa(<?php echo $Id_usuario;?>,1,1);" class="btn btn-success btn-sm"><i class="fa fa-check" aria-hidden="true"></i></a>
-                          <a onclick="IniciarModalRechazo(<?php echo $Id_usuario;?>,0,1);" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#RechazarModal"><i class="fa fa-times" aria-hidden="true"></i></a>
-                        </div>
-                      <?php
-                    }
-                    ?>
-                    </div>
-                    <?php
-                }
-
-                if(isset($acta['2'])){
-                    ?>
-                    <div style="display: inline-block;">
-                    <img src="imagen/fileclip.png" style="vertical-align: top; cursor: pointer;" id="img2<?php echo $Id_usuario;?>" onclick="DescargarActa('<?php echo $acta['2'];?>');"  width="30px">
-                    <?php
-                    if(!isset($actas_status['2'])){
-                      ?>
-                        <div id="opt2<?php echo $Id_usuario; ?>">
-                          <a onclick="ValidarActa(<?php echo $Id_usuario;?>,1,2);" class="btn btn-success btn-sm"><i class="fa fa-check" aria-hidden="true"></i></a>
-                          <a onclick="IniciarModalRechazo(<?php echo $Id_usuario;?>,0,2);" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#RechazarModal"><i class="fa fa-times" aria-hidden="true"></i></a>
-                        </div>
-                      <?php
-                    }
-                    ?>
-                    
-                    </div>
-                    <?php
-                }
-
-                if(isset($acta['3'])){
-                    ?>
-                    <div style="display: inline-block;">
-                    <img src="imagen/fileclip.png" style="vertical-align: top; cursor: pointer;" id="img3<?php echo $Id_usuario;?>" onclick="DescargarActa('<?php echo $acta['3'];?>');"  width="30px">
-                    <?php
-                    if(!isset($actas_status['3'])){
-                      ?>
-                        <div id="opt3<?php echo $Id_usuario; ?>">
-                          <a onclick="ValidarActa(<?php echo $Id_usuario;?>,1,3);" class="btn btn-success btn-sm"><i class="fa fa-check" aria-hidden="true"></i></a>
-                          <a onclick="IniciarModalRechazo(<?php echo $Id_usuario;?>,0,3);" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#RechazarModal"><i class="fa fa-times" aria-hidden="true"></i></a>
-                        </div>
-                      <?php
-                    }
-                    ?>
-                    </div>
-                    <?php
-                }
-                
-                ?>
-              
-              
-              <input type="file" style="display: none;" onchange="CargarActas('<?php echo $Id_usuario;?>',this,1);" id="file1<?php echo $Id_usuario;?>">
-              <input type="file" style="display: none;" onchange="CargarActas('<?php echo $Id_usuario;?>',this,2);" id="file2<?php echo $Id_usuario;?>">
-              <input type="file" style="display:none;" onchange="CargarActas('<?php echo $Id_usuario;?>',this,3);" id="file3<?php echo $Id_usuario;?>">
-            </td>
+        
         <!--<td style="text-align: center; min-width: 110px;"><?php echo 'pendiente' ?></td>-->
         <td style="text-align: center; min-width: 100px;"><?php echo $fecha_alta_us; ?></td>
         <td style="text-align: center; min-width: 100px;"><?php echo $fecha_baja_us; ?></td>

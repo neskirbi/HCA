@@ -8,7 +8,7 @@ $temp6="";
 $script="";
     $title ="HeadCount | Grupo B ";
     include "head.php";
-    include "sidebar.php";
+    include "sidebarcapital.php";
 ?>
 
 <style type="text/css">
