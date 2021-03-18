@@ -42,7 +42,7 @@
                       </thead>    
                         <?php
                         $query = "declare @dni varchar(max),@sql varchar(max)
-                        set @dni=''''+(Select REPLACE((SELECT zona FROM usuaripsPromo where nombre='reyes'),',',''','''))+''''
+                        set @dni=''''+(Select REPLACE((SELECT zona FROM usuaripsPromo where nombre='".$id."'),',',''','''))+''''
                         set @sql='
                         declare @actas varchar(MAX),@actas_status Varchar(MAX)
                         SELECT
@@ -54,8 +54,7 @@
                         FROM usuarionom as usu
                         where usu.dni in ('+@dni+')
                         group by usu.us_nombre '
-                        EXEC (@sql)
-                        select @sql";
+                        EXEC (@sql)";
 
 
 
@@ -63,58 +62,57 @@
                         $result = sqlsrv_query($conn, $query);
                         $total = array('subidas' => 0,'autorizadas' => 0, 'erroneas' => 0); 
                         while ($row = sqlsrv_fetch_array($result)) {
-                          $json_actas=json_decode('['.$row['actas'].'{}]',true);
-
-                          $json_actas_status=json_decode('['.$row['actas_status'].'{}]',true);
+                          
+                          
+                          $actas=json_decode('['.$row['actas'].'{}]',true);
+                         
+                          
+                          $actas_status=json_decode('['.$row['actas_status'].'{}]',true);
                           
                          
                           $subidas=0;
                           $autorizadas=0;
                           $erroneas=0;
 
-                          foreach ($json_actas as $key => $value) {
-                            if(isset($json_actas[$key]['1'])){
+                          foreach ($actas as $key => $value) {
+                            if(isset($actas[$key]['1'])){
                               $subidas++;
                             }
-                            if(isset($json_actas[$key]['2'])){
+                            if(isset($actas[$key]['2'])){
                               $subidas++;
                             }
-                            if(isset($json_actas[$key]['3'])){
+                            if(isset($actas[$key]['3'])){
                               $subidas++;
                             }
                             
                           }
 
-                          foreach ($json_actas_status as $key => $value) {
-                            if(isset($json_actas_status[$key]['1'])){
-                              switch ($json_actas_status[$key]['1']){
-                                case '1':
-                                $autorizadas++;
-                                break;
-                                case '0':
-                                $erroneas++;
-                                break;
+                          foreach ($actas_status as $key => $value) {
+                            for($st=1;$st<=3;$st++){
+                              if(isset($actas_status[$key])){
+                                
+                                
+
+                                if(isset($actas_status[$key][$st]['cap']))
+                                switch ($actas_status[$key][$st]['cap']){
+                                  case '1':
+                                  $autorizadas++;
+                                  break;
+                                  case '0':
+                                  $erroneas++;
+                                  break;
+                                }
+                                if(isset($actas_status[$key][$st]['leg']))
+                                switch ($actas_status[$key][$st]['leg']){
+                                  case '1':
+                                  $autorizadas++;
+                                  break;
+                                  case '0':
+                                  $erroneas++;
+                                  break;
+                                }
                               }
-                            }
-                            if(isset($json_actas_status[$key]['2'])){
-                              switch ($json_actas_status[$key]['2']){
-                                case '1':
-                                $autorizadas++;
-                                break;
-                                case '0':
-                                $erroneas++;
-                                break;
-                              }
-                            }
-                            if(isset($json_actas_status[$key]['3'])){
-                              switch ($json_actas_status[$key]['3']){
-                                case '1':
-                                $autorizadas++;
-                                break;
-                                case '0':
-                                $erroneas++;
-                                break;
-                              }
+                           
                             }
                             
                           }

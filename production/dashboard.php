@@ -204,7 +204,7 @@ Botones de inicio
       <th style="text-align: center; background-color: #405467; border:solid #fff 1px; min-width:120px; "><font style="color: #fff;" size="2" >Cedis</font></th>
       <th style="text-align: center; background-color: #405467; border:solid #fff 1px; min-width:150px; "><font style="color: #fff;" size="2" >Puesto</font></th>
       <th style="text-align: center; background-color: #405467; border:solid #fff 1px; min-width:110px; "><font style="color: #fff;" size="2" >Status</font></th>
-      <!--<th style="text-align: center; background-color: #405467; border:solid #fff 1px; min-width:400px; "><font style="color: #fff;" size="2" >Actas<br>Admon.</font></th>-->
+      <th style="text-align: center; background-color: #405467; border:solid #fff 1px; min-width:400px; "><font style="color: #fff;" size="2" >Actas<br>Admon.</font></th>
       <!--<th style="text-align: center; background-color: #405467; border:solid #fff 1px; min-width:110px; "><font style="color: #fff;" size="2" >Autorizada</font></th>-->
       <th style="text-align: center; background-color: #405467; border:solid #fff 1px; min-width:100px; "><font style="color: #fff;" size="2" >Fecha Alta</font></th>
       <th style="text-align: center; background-color: #405467; border:solid #fff 1px; min-width:100px; "><font style="color: #fff;" size="2" >Fecha Baja</font></th>
@@ -277,6 +277,7 @@ Botones de inicio
         $is3=$usuario['is3'];
         $is4=$usuario['is4'];
         $Id_usuario=$usuario['Id_usuario'];
+        $actas=json_decode($usuario['actas'],true);
         $actas_status=json_decode($usuario['actas_status'],true);
         $now = new \DateTime('now');
         $anio = (int)$now->format('Y');
@@ -321,6 +322,26 @@ Botones de inicio
         echo '<td style="text-align: center; min-width: 150px;">'.$puesto_descripcion.'</td>';//puesto
         echo '<td style="text-align: center; min-width: 110px;">'.$estatus.'</td>';
         ?>
+        <td style="text-align: center; min-width: 400px;">
+                <?php
+                for($ele=1;$ele<=3;$ele++){
+                  
+                  if(isset($actas[$ele])){
+                    ?>
+                    <div style="display: inline-block;">
+                    <img src="imagen/fileclip.png" style="vertical-align: top; cursor: pointer;" id="img<?php echo $ele.$Id_usuario;?>" onclick="DescargarActa('<?php echo $actas[$ele];?>');" width="30px">
+                    </div>
+                    <?php
+                  }
+                }
+                
+                ?>
+              
+              
+              <input type="file" style="display: none;" onchange="CargarActas('<?php echo $Id_usuario;?>',this,1);" id="file1<?php echo $Id_usuario;?>">
+              <input type="file" style="display: none;" onchange="CargarActas('<?php echo $Id_usuario;?>',this,2);" id="file2<?php echo $Id_usuario;?>">
+              <input type="file" style="display:none;" onchange="CargarActas('<?php echo $Id_usuario;?>',this,3);" id="file3<?php echo $Id_usuario;?>">
+            </td>
         
         <!--<td style="text-align: center; min-width: 110px;"><?php echo 'pendiente' ?></td>-->
         <td style="text-align: center; min-width: 100px;"><?php echo $fecha_alta_us; ?></td>

@@ -50,7 +50,22 @@ if(count($_POST)==0){
     <div class="col-xs-12 no-print">
    <!--   <a data-toggle="tooltip" data-placement="top" title='Aprobar Nomina' class='btn btn-primary' /><i class="glyphicon glyphicon-ok"></i></a> 
       -->
-	  <select id="periodos" class="form-control pull-right" style="width: 220px; " onchange="FiltaPeriodo(this);">
+
+      <select id="semanas" class="form-control pull-right" style="width: 180px; margin-right: 5px;" onchange="Buscar(this);">
+          <option value="">--Semana--</option>
+          <?php
+          $opt = "SELECT  idp, periodo,period FROM periodo where period='$ultimoPeriodo' ORDER BY idp desc";
+           
+          $opt = sqlsrv_query($conn, $opt);
+          while($options = sqlsrv_fetch_array($opt)){
+            echo'<option value="'.$options['periodo'].'">'.$options['periodo'].'</option>';
+
+            
+          }
+          ?>
+        </select>
+
+	  <select id="periodos" class="form-control pull-right" style="width: 220px; margin-right: 5px;" onchange="FiltaPeriodo(this);">
 
         <?php
         if(count($_POST)!=0){
@@ -117,6 +132,8 @@ if(count($_POST)==0){
           }
           ?>
         </select>
+
+        
 
 
       </div>
@@ -442,17 +459,27 @@ function Buscar(este) {
 
     switch($(este).attr('id')){
       case "puestos":
+      $('#semanas').prop('selectedIndex',0);
       $('#empleados').prop('selectedIndex',0);
       $('#cedis').prop('selectedIndex',0);
       break;
       case "empleados":
+        $('#semanas').prop('selectedIndex',0);
       $('#puestos').prop('selectedIndex',0);
       $('#cedis').prop('selectedIndex',0);
       break;
       case "cedis":
+      $('#semanas').prop('selectedIndex',0);
       $('#empleados').prop('selectedIndex',0);
       $('#puestos').prop('selectedIndex',0);
       break;
+
+      case "cedis":
+      $('#semanas').prop('selectedIndex',0);
+      $('#empleados').prop('selectedIndex',0);
+      $('#puestos').prop('selectedIndex',0);
+      break;
+
 
     }
 
